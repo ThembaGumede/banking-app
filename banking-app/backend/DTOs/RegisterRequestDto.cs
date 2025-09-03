@@ -1,0 +1,14 @@
+namespace BankingApp.DTOs
+{
+    public class RegisterRequestDto
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string Username { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+       
+       public string[] Roles { get; set; }  // Default role is User or reader
+    }
+}
