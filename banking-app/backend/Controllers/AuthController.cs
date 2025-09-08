@@ -9,10 +9,13 @@ namespace BankingApp.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly ITokenRepository tokenRepository;
         private readonly UserManager<IdentityUser> userManager;
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
+
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
 
@@ -50,14 +53,39 @@ namespace BankingApp.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            var result = await _authService.LoginAsync(loginDto);
-            if (!result.Success)
+            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+            if (user != null)
             {
-                return Unauthorized(result.Message);
+                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password); // using boolean to check password
+             
+                if (checkPasswordResult)
+                {
+                    //Get roles for this user
+                    var roles = await userManager.GetRolesAsync(user);
+                    if (roles != null)
+                    {
+                        //create token
+                        var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
+                        
+                        var response = new LoginResponse
+                        {
+                            JwtToken = jwtToken
+                        };
+
+
+                        return Ok(response);
+                    }
+                  
+                }
+
+
+
+
+
             }
-            return Ok(new { Token = result.Token });
+           return BadRequest("Invalid credentials"); //incorrect password or username
         }
     }
 }
