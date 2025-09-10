@@ -7,7 +7,7 @@ This project is a banking application designed to provide a secure, scalable, an
 ## Tech Stack
 
 **Client:** React
-- This is because it provides a Morden, fast, JavaScript-based fronted.
+- This is because it provides a Modern, fast, JavaScript-based fronted.
 
 **Server:** ASP.Net Core
 - Provides built-in support for authenicatio, authorization, and a secure APIs.
