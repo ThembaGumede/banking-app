@@ -17,15 +17,15 @@ namespace BankingApp.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            var readerRolerId = "69dced75-4f96-481e-8e20-7d9e8fa77c79";
+            var readerRoleId = "69dced75-4f96-481e-8e20-7d9e8fa77c79";
             var writerRoleId = "8ee00bc4-dc20-483f-8cf9-9d7f8857b048";
 
             var roles = new List<IdentityRole>
             {
                 new IdentityRole
                 {
-                    Id = readerRolerId,
-                    ConcurrencyStamp = readerRolerId,
+                    Id = readerRoleId,
+                    ConcurrencyStamp = readerRoleId,
                     Name = "Reader",
                     NormalizedName = "READER".ToUpper()
                 },

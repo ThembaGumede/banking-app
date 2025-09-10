@@ -4,10 +4,13 @@ using BankingApp.Services;
 
 namespace BankingApp.Controllers
 {
+    
+    
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        
         private readonly IAuthService _authService;
         private readonly ITokenRepository tokenRepository;
         private readonly UserManager<IdentityUser> userManager;
@@ -35,7 +38,7 @@ namespace BankingApp.Controllers
             {
                 // add roles to this user
 
-                if (registerRequestDto.Roles != null && registerRequestDto.Roles.any())
+                if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
                 {
                     // add default role
 
